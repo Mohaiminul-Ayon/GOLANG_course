@@ -13,7 +13,7 @@ function SingleProductPage() {
 
   const fetchProduct = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/products/${id}`); // Adjust the API endpoint
+      const response = await axios.get(`http://localhost:8080/api/products/${id}`); // Adjust the API endpoint
       setProduct(response.data);
     } catch (error) {
       console.error('Error fetching product:', error);
