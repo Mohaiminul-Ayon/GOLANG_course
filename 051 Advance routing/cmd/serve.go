@@ -10,7 +10,12 @@ import (
 func Serve() {
 	mux := http.NewServeMux()
 
+	cntrl := func(w http.ResponseWriter, r *http.Request) {
 
+	}
+	handler := http.HandlerFunc(cntrl)
+	
+	mux.Handle("GET /route", handler)
 
 	mux.Handle("GET /products", http.HandlerFunc(handlers.GetProducts))
 	mux.Handle("POST /products", http.HandlerFunc(handlers.CreateProduct))
