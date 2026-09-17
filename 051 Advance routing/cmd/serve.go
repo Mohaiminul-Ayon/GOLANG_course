@@ -30,8 +30,8 @@ func Serve() {
 	// }
 
 	managerInstance.Use(
-		middleware.Cors,
 		middleware.Preflight,
+		middleware.Cors,
 		middleware.Logger,
 	)
 
