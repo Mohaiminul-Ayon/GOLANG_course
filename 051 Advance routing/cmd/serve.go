@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"ecommerce/globalRouter"
 	"ecommerce/manager"
 	"ecommerce/middleware"
 	"fmt"
@@ -9,19 +8,40 @@ import (
 )
 
 func Serve() {
-	manager:= manager.NewManager()
+	managerInstance:= manager.NewManager()
 
-	manager.Use(middleware.Logger,middleware.Hudai,middleware.Arekta)
+	// manager.Use(middleware.Logger,middleware.Hudai,middleware.CorseWithPreflight)
 
 	mux := http.NewServeMux()
 
-	initRouts(mux,manager)
+	// globalRouter := middleware.CorseWithPreflight(mux)
+	
+	// wrppedMux := manager.WrappedRouter(
+	// 	mux,
+	// 	middleware.Logger,
+	// 	middleware.Hudai,
+	// 	middleware.CorseWithPreflight,
+	// )
 
-	globalRouter := globalRouter.GlobalRouter(mux)
+	// globalMiddlewares := []manager.Middleware{
+	// 	middleware.CorseWithPreflight,
+	// 	middleware.Hudai,
+	// 	middleware.Logger,
+	// }
 
+	managerInstance.Use(
+		middleware.Cors,
+		middleware.Preflight,
+		middleware.Logger,
+	)
+
+	wrappedMux := managerInstance.WrappedRouter(mux)
+	
+	initRouts(mux,managerInstance)
+	
 	fmt.Println("Server running on : 8080")
 
-	err := http.ListenAndServe(":8080", globalRouter) //"Faild"
+	err := http.ListenAndServe(":8080", wrappedMux) //"Faild"
 	if err != nil {
 		fmt.Println("Error starting the server", err)
 	}

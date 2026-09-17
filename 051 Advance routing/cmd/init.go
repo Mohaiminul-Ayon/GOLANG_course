@@ -3,6 +3,7 @@ package cmd
 import (
 	handlers "ecommerce/handlers"
 	"ecommerce/manager"
+	"ecommerce/middleware"
 	"net/http"
 )
 
@@ -13,6 +14,7 @@ func initRouts(mux *http.ServeMux, manager *manager.Manager) {
 		"GET /Ayon",
 		manager.With(
 				http.HandlerFunc(handlers.Test),
+				middleware.Arekta,
 			),
 		)
 	mux.Handle(

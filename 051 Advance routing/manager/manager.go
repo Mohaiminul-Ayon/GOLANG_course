@@ -20,19 +20,28 @@ func (mngr *Manager)Use(middlewares ...Middleware){
 	// return mngr //builder pattern
 }
 
-func (mngr *Manager)With(next http.Handler, middlewares ...Middleware)http.Handler{
-		n:= next
+func (mngr *Manager)With(handaler http.Handler, middlewares ...Middleware)http.Handler{
+		h:= handaler
 		//middlewares = [logger,Hudai,]
 		//huddai(logger(http.handlefunc(getproduct)))
 		for _,middleware:= range middlewares{
-			n = middleware(n)
+			h = middleware(h)
 		}
 		//
 		for _,globalMiddlewares:= range mngr.globalMiddlewares{
-			n = globalMiddlewares(n)
+			h = globalMiddlewares(h)
 		}
 
 
-		return n
+		return h
 	
+}
+
+func (mngr *Manager)WrappedRouter(handaler http.Handler)http.Handler{
+
+	h:=handaler
+		for _,middleware:= range mngr.globalMiddlewares{
+			h = middleware(h)
+		}
+		return h
 }
