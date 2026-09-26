@@ -1,4 +1,4 @@
-package manager
+package middleware
 
 import (
 	"net/http"
@@ -28,7 +28,6 @@ func (mngr *Manager)With(handaler http.Handler, middlewares ...Middleware)http.H
 			h = middleware(h)
 		}
 		//
-
 		return h
 	
 }

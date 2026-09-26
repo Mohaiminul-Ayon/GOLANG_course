@@ -19,13 +19,11 @@ if err!=nil {
 	http.Error(w,"Plz give me valid Json",400)
 	return 
 }
-productList:=database.GetProductList()
-newProduct.Id = len(productList)+1
-database.Store(newProduct)
-// productList = append(productList, newProduct)
 
-//encoder
-util.SendData(w,newProduct,201)
+
+createdProduct:= database.Store(newProduct)
+
+util.SendData(w,createdProduct,201)
 
 
 }

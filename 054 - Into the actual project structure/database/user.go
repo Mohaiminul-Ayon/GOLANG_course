@@ -1,0 +1,16 @@
+package database
+
+type User struct {
+	ID          int    `json:"id"`
+	FirstName   string `json:"first_name"`
+	LastName    string `json:"last_name"`
+	Email       string `json:"email"`
+	Password    string `json:"password"`
+	IsShopOwner string `json:"is_shop_owner"`
+}
+
+var users []User
+
+func (u User) Store() User {
+users = append(users,u)
+}

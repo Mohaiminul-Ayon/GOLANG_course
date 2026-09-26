@@ -63,10 +63,41 @@ func init() {
 	productList = append(productList, prd6)
 }
 
-func Store(p Product) {
+func Store(p Product) Product {
+	p.Id = len(productList) + 1
 	productList = append(productList, p)
+	return p
 }
 
-func GetProductList() []Product {
+func List() []Product {
 	return productList
+}
+
+func GetId(productID int) *Product {
+	for _, product := range productList {
+		if product.Id == productID {
+			return &product
+		}
+	}
+	return nil
+}
+
+func Update(product Product) {
+	for idx, p := range productList {
+		if p.Id == product.Id {
+			productList[idx] = product
+		}
+	}
+}
+
+func Delet(productID int) {
+	var tempList []Product
+
+	for _, p := range productList {
+		if p.Id != productID {
+			tempList = append(tempList, p)
+		}
+	}
+	productList = tempList
+
 }
