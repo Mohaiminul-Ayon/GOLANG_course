@@ -12,5 +12,22 @@ type User struct {
 var users []User
 
 func (u User) Store() User {
+
+	if u.ID != 0{
+		return u
+	}
+
+	u.ID = len(users)+1
 users = append(users,u)
+return u
+}
+
+func Find(email,pass string) *User{
+	for _, u := range users{
+		if u.Email == email && u.Password == pass{
+			return &u
+		}
+	}
+
+	return nil
 }

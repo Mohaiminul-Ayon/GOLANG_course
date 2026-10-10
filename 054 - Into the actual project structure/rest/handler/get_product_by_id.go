@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-//GET /products/{productID}
+// GET /products/{productID}
 func GetProductByID(w http.ResponseWriter, r *http.Request) {
 	productID := r.PathValue("id")
 
@@ -17,11 +17,10 @@ func GetProductByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-
 	ProductList := database.GetId(pId)
-	if ProductList!=nil{
+	if ProductList != nil {
 		util.SendData(w, ProductList, 200)
 		return
 	}
-	util.Senderror(w,"Data pai nai",404)
+	util.Senderror(w, "Data pai nai", 404)
 }

@@ -10,18 +10,18 @@ import (
 
 // POST
 func CreateUser(w http.ResponseWriter, r *http.Request) {
-	var newProduct database.Product
+	var newUser database.User
 	//decoder
 	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(&newProduct)
+	err := decoder.Decode(&newUser)
 	if err != nil {
 		fmt.Println(err)
-		http.Error(w, "Plz give me valid Json", 400)
+		http.Error(w, "INvalied request", http.StatusBadRequest)
 		return
 	}
 
-	createdProduct := database.Store(newProduct)
+	createdUser := newUser.Store()
 
-	util.SendData(w, createdProduct, 201)
+	util.SendData(w, createdUser, http.StatusCreated)
 
 }

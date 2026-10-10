@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"ecommerce/rest"
 	"ecommerce/config"
+	"ecommerce/rest"
 )
 
 func Serve() {
