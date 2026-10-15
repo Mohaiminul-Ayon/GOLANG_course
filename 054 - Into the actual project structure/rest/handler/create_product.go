@@ -10,6 +10,7 @@ import (
 
 // POST
 func CreateProduct(w http.ResponseWriter, r *http.Request) {
+
 	var newProduct database.Product
 	//decoder
 	decoder := json.NewDecoder(r.Body)

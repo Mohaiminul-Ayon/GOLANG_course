@@ -1,14 +1,20 @@
 package main
 
-import (
-	"ecommerce/util"
-	"fmt"
-)
+// import (
+// 	"ecommerce/util"
+// 	"fmt"
+// )
 
-// "ecommerce/cmd"
+import "ecommerce/cmd"
 
 func main() {
-	// cmd.Serve()
+	cmd.Serve()
+
+
+
+	//JWT
+
+
 	// // var s string
 
 	// // s = "a,b,c"
@@ -29,16 +35,18 @@ func main() {
 
 	// text := h.Sum(nil)
 	// fmt.Println(text)
-	jwt, err := util.CreateJwt("my-secret", util.Payload{
-		Sub:         "45",
-		FirstName:   "Mohaiminul",
-		LastName:    "Ayon",
-		Email:       "mohaiminul5@gmail.com",
-		IsShopOwner: false,
-	})
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(jwt)
+	// jwt, err := util.CreateJwt("my-secret", util.Payload{
+	// 	Sub:         "45",
+	// 	FirstName:   "Mohaiminul",
+	// 	LastName:    "Ayon",
+	// 	Email:       "mohaiminul5@gmail.com",
+	// 	IsShopOwner: false,
+	// })
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	return
+	// }
+	// fmt.Println(jwt)
+
+	
 }
