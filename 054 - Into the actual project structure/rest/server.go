@@ -2,16 +2,38 @@ package rest
 
 import (
 	"ecommerce/config"
-	"ecommerce/rest/middlewares"
+	"ecommerce/rest/handlers/product"
+	"ecommerce/rest/handlers/review"
+	"ecommerce/rest/handlers/user"
+	middleware "ecommerce/rest/middlewares"
 	"fmt"
 	"net/http"
 	"os"
 	"strconv"
 )
 
-func Start(cnf config.Config) {
+type Server struct {
+	cnf            *config.Config
+	productHandler *product.Handler
+	userHandler    *user.Handler
+	reviewHandler  *review.Handler
+}
+
+func NewSrver(
+	cnf *config.Config,
+	productHandler *product.Handler,
+	userHandler *user.Handler,
+	reviewHandler *review.Handler,
+) *Server {
+	return &Server{
+		cnf:            cnf,
+		productHandler: productHandler,
+		userHandler:    userHandler,
+		reviewHandler:  reviewHandler,
+	}
+}
+func (server *Server) Start() {
 	managerInstance := middleware.NewManager()
-	mux := http.NewServeMux()
 
 	managerInstance.Use(
 		middleware.Preflight,
@@ -19,10 +41,15 @@ func Start(cnf config.Config) {
 		middleware.Logger,
 	)
 
+	mux := http.NewServeMux()
 	wrappedMux := managerInstance.WrappedRouter(mux)
 
-	InitRouts(mux, managerInstance)
-	address := ":" + strconv.Itoa(cnf.HttpPort) //typecasting
+	server.productHandler.RegisterRouts(mux, managerInstance)
+	server.userHandler.RegisterRouts(mux, managerInstance)
+	server.reviewHandler.RegisterRouts(mux, managerInstance)
+
+	// InitRouts(mux, managerInstance)
+	address := ":" + strconv.Itoa(server.cnf.HttpPort) //typecasting
 	fmt.Println("Server running on port", address)
 
 	err := http.ListenAndServe(address, wrappedMux)

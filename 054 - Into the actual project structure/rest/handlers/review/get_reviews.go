@@ -1,4 +1,4 @@
-package handlers
+package review
 
 import (
 	"ecommerce/database"
@@ -8,7 +8,7 @@ import (
 )
 
 // GET /products/{productID}
-func GetProductByID(w http.ResponseWriter, r *http.Request) {
+func (h *Handler)GetReviews(w http.ResponseWriter, r *http.Request) {
 	productID := r.PathValue("id")
 
 	pId, err := strconv.Atoi(productID)
