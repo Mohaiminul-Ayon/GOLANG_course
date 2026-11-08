@@ -1,4 +1,4 @@
-package handlers
+package user
 
 import (
 	"ecommerce/config"
@@ -15,7 +15,7 @@ type ReqLogin struct {
 }
 
 // POST
-func Login(w http.ResponseWriter, r *http.Request) {
+func (h *Handler)Login(w http.ResponseWriter, r *http.Request) {
 	var reqLogin ReqLogin
 	//decoder
 	decoder := json.NewDecoder(r.Body)
@@ -33,15 +33,14 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 	cnf := config.Getconfig()
 
-	aceessToken,err:=util.CreateJwt(cnf.JwtSecreteKey,util.Payload{
-		Sub: usr.ID,
+	aceessToken, err := util.CreateJwt(cnf.JwtSecreteKey, util.Payload{
+		Sub:       usr.ID,
 		FirstName: usr.FirstName,
-		LastName: usr.LastName,
-
+		LastName:  usr.LastName,
 	})
 
-	if err!=nil{
-		http.Error(w,"Internal sever error",http.StatusInternalServerError)
+	if err != nil {
+		http.Error(w, "Internal sever error", http.StatusInternalServerError)
 	}
 	util.SendData(w, aceessToken, http.StatusCreated)
 }
